@@ -7,10 +7,16 @@
 
 int main()
 {
-    produto *cabeca_estoque;
-    int opcao,contador_id = 1009;
+    int opcao = 67, contador_id = 1009;
+    produto *cabeca_simples = calloc(1, sizeof(produto));
+    if (cabeca_simples == NULL)
+    {
+        printf("\nErro de alocação de memoria!!");
+        return 1;
+    }
 
-    while (opcao != 7)
+    system("clear");
+    while (opcao != 0)
     {
 
         printf("===== ESTOQUE DA LOJA =====\n"
@@ -24,7 +30,7 @@ int main()
         switch (opcao)
         {
         case 1:
-            system("clear");
+
         menu_simples:
             printf("===== GERENCIAR PERECÍVEIS =====\n"
                    "Escolha uma opção:\n"
@@ -42,13 +48,15 @@ int main()
             {
             case 1:
                 system("clear");
-                printf("1. Inserir no início"
-                       "2. Inserir no fim");
-                scanf("%d", &opcao);
 
+                printf("1. Inserir no início\n"
+                       "2. Inserir no fim\n");
+                scanf("%d", &opcao);
+                inserir_simples(opcao, &cabeca_simples, &contador_id);
                 break;
             case 2:
                 system("clear");
+
                 break;
             case 3:
                 system("clear");
@@ -60,7 +68,8 @@ int main()
                 break;
             case 5:
                 system("clear");
-
+                printf("%-18s %-29s %-26s %s \n", "ID", "NOME", "PREÇO", "QUANTIDADE");
+                listar_simples(cabeca_simples);
                 break;
             case 6:
                 system("clear");
@@ -68,12 +77,14 @@ int main()
                 break;
             case 7:
                 system("clear");
+
                 break;
             case 0:
                 system("clear");
+
                 break;
             default:
-                system("clear");
+
                 printf("===============================\n"
                        "Opção inválida. Tente novamente.\n"
                        "===============================\n\n");
@@ -82,22 +93,21 @@ int main()
 
             break;
         case 2:
-            system("clear");
 
             break;
         case 3:
-            system("clear");
 
             break;
         case 0:
-            system("clear");
+
             printf("PROGRAMA ENCERRADO...\n");
-            return 0;
+            break;
         default:
-            system("clear");
+
             printf("===============================\n"
                    "Opção inválida. Tente novamente.\n"
                    "===============================\n\n");
         }
+        return 0;
     }
 }

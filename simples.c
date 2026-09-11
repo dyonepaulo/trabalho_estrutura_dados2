@@ -96,3 +96,23 @@ int inserir_simples(int opcao, produto **cabeca_estoque, int *contador_id)
         return 0;
     }
 }
+
+int listar_simples(produto *cabeca_estoque)
+{
+    if (cabeca_estoque->id == 0)
+        {
+            printf("\n========================"
+                   "\n  !!!!LISTA VAZIA!!!!"
+                   "\n========================\n");
+            return 0;
+        }
+    while (cabeca_estoque != NULL)
+    {
+        printf("%-19d", cabeca_estoque->id);
+        printf("%-30s", cabeca_estoque->nome);
+        printf("%-26.2f", cabeca_estoque->valor);
+        printf("%d\n", cabeca_estoque->quantidade);
+        cabeca_estoque = cabeca_estoque->no.proximo;
+    }
+    return 0;
+}

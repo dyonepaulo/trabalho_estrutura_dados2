@@ -10,7 +10,7 @@ typedef struct
 
 struct produto
 {
-    char nome[5];
+    char nome[50];
     int id, quantidade;
     float valor;
     nos no;
