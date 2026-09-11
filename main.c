@@ -7,8 +7,8 @@
 
 int main()
 {
-
-    int opcao;
+    produto *cabeca_estoque;
+    int opcao,contador_id = 1009;
 
     while (opcao != 7)
     {
