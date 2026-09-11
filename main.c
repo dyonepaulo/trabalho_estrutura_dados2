@@ -26,22 +26,26 @@ int main()
         case 1:
             system("clear");
         menu_simples:
-            printf("===== GERENCIAR PERECÍVEIS =====\n");
-            printf("Escolha uma opção:\n");
-            printf("1. Inserir no início ou fim\n");
-            printf("2. Remover no início ou fim e por ID\n");
-            printf("3. Buscar produto por nome\n");
-            printf("4. Atualizar quantidade de um produto\n");
-            printf("5. Exibir todos os produtos\n");
-            printf("6. Contar quantos produtos há no estoque\n");
-            printf("7. Esvaziar completamente o estoque\n");
-            printf("0. Voltar ao menu principal\n");
+            printf("===== GERENCIAR PERECÍVEIS =====\n"
+                   "Escolha uma opção:\n"
+                   "1. Inserir no início ou fim\n"
+                   "2. Remover no início ou fim e por ID\n"
+                   "3. Buscar produto por nome\n"
+                   "4. Atualizar quantidade de um produto\n"
+                   "5. Exibir todos os produtos\n"
+                   "6. Contar quantos produtos há no estoque\n"
+                   "7. Esvaziar completamente o estoque\n"
+                   "0. Voltar ao menu principal\n");
             scanf("%d", &opcao);
 
             switch (opcao)
             {
             case 1:
                 system("clear");
+                printf("1. Inserir no início"
+                       "2. Inserir no fim");
+                scanf("%d", &opcao);
+
                 break;
             case 2:
                 system("clear");
