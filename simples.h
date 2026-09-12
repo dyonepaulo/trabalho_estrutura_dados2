@@ -8,4 +8,6 @@ int listar_simples(produto *cabeca_estoque);
 
 int menu_simples(produto **cabeca_estoque, int *contador_id);
 
+int esvaziar_simples(produto *cabeca_estoque);
+
 #endif

@@ -145,9 +145,9 @@ int listar_simples(produto *cabeca_estoque)
 
 int menu_simples(produto **cabeca_estoque, int *contador_id)
 {
-    int opcao = 67;
+    int opcao;
     system("clear");
-    while (opcao != 0)
+    while (1)
     {
         printf("===== GERENCIAR PERECÍVEIS =====\n"
                "1. Inserir no início ou fim\n"
@@ -190,16 +190,59 @@ int menu_simples(produto **cabeca_estoque, int *contador_id)
             break;
         case 7:
             system("clear");
-
+            esvaziar_simples(*cabeca_estoque);
             break;
         case 0:
             system("clear");
+            return 0;
             break;
         default:
             system("clear");
             printf("===============================\n"
                    "Opção inválida. Tente novamente.\n"
                    "===============================\n\n");
+        }
+    }
+}
+int esvaziar_simples(produto *cabeca_estoque)
+{
+    int protege_cabeca = 1;
+    produto *libera;
+    while (1)
+    {
+        if (cabeca_estoque->id == 0)
+        {
+            system("clear");
+            printf("===========================\n"
+                   "Estoque já está desocupado.\n"
+                   "===========================\n\n");
+            return 0;
+        }
+        if (protege_cabeca == 1)
+        {
+            if (cabeca_estoque->no.proximo == NULL)
+            {
+                cabeca_estoque->id = 0;
+                system("clear");
+                printf("=======================\n"
+                       "Estoque foi desocupado.\n"
+                       "=======================\n\n");
+                return 0;
+            }
+            cabeca_estoque->id = 0;
+            cabeca_estoque = cabeca_estoque->no.proximo;
+            protege_cabeca = 0;
+        }
+        libera = cabeca_estoque->no.proximo;
+        free(cabeca_estoque);
+        cabeca_estoque = libera;
+        if (libera == NULL)
+        {
+            system("clear");
+            printf("=======================\n"
+                   "Estoque foi desocupado.\n"
+                   "=======================\n\n");
+            return 0;
         }
     }
 }

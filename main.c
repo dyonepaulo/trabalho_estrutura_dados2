@@ -7,7 +7,7 @@
 
 int main()
 {
-    int opcao = 67, contador_id = 1009;
+    int opcao, contador_id = 1009;
     produto *cabeca_simples = calloc(1, sizeof(produto));
     if (cabeca_simples == NULL)
     {
@@ -15,7 +15,7 @@ int main()
         return 1;
     }
 
-    while (opcao != 13)
+    while (1)
     {
         printf("\n===== ESTOQUE DA LOJA =====\n"
                "1. Gerenciar Perecíveis (Simples)\n"
@@ -40,6 +40,7 @@ int main()
         case 0:
             system("clear");
             printf("PROGRAMA ENCERRADO...\n");
+            free(cabeca_simples);
             return 0;
             break;
         default:
@@ -49,5 +50,4 @@ int main()
                    "===============================\n\n");
         }
     }
-    return 0;
 }
