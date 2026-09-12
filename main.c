@@ -35,7 +35,7 @@ int main()
 
             break;
         case 3:
-
+            circular_menu(&contador_id);
             break;
         case 0:
             system("clear");
