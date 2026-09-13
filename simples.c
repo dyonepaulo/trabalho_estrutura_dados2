@@ -187,7 +187,7 @@ int menu_simples(produto **cabeca_estoque, int *contador_id)
             break;
         case 6:
             system("clear");
-
+            conta_produtos(*cabeca_estoque, NULL);
             break;
         case 7:
             system("clear");

@@ -3,6 +3,14 @@
 
 typedef struct produto produto;
 
+typedef struct 
+{
+    int tamanho;
+    produto *head;
+    produto *tail;
+
+} listaCircular;
+
 typedef struct
 {
     produto *proximo, *anterior;
@@ -18,5 +26,6 @@ struct produto
 
 int buscar_nome_simples(produto *cabeca_estoque);
 
+int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular);
 
 #endif

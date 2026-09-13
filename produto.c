@@ -50,3 +50,43 @@ int buscar_nome_simples(produto *cabeca_estoque)
            "\n=========================\n");
     return 0;
 }
+int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular)
+{
+    int quantidade_produto = 0;
+
+    while (cabeca_estoque != NULL && cabeca_estoque->id != 0)
+    {
+        quantidade_produto++;
+        cabeca_estoque = cabeca_estoque->no.proximo;
+    }
+    if (cabeca_circular != NULL)
+    {
+        produto *aux = cabeca_circular->head;
+        while (aux->id != 0)
+        {
+
+            quantidade_produto++;
+            aux = aux->no.proximo;
+            if (aux == cabeca_circular->head)
+            {
+                goto imprimir_produtos;
+            }
+        }
+    }
+
+imprimir_produtos:
+    if (quantidade_produto == 0)
+    {
+        system("clear");
+        printf("\n========================"
+               "\n  !!!!LISTA VAZIA!!!!"
+               "\n========================\n");
+        return 0;
+    }
+
+    printf("\n=================================="
+           "\n    LISTA POSSUI: %d PRODUTOS"
+           "\n==================================\n",
+           quantidade_produto);
+    return 0;
+}
