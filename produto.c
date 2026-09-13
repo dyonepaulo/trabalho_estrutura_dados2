@@ -29,9 +29,10 @@ int buscar_nome_simples(produto *cabeca_estoque)
             if (encontrou == 1)
             {
                 printf("\n========================="
-                       "\n!!!PRODUTOS ENCONTRADO!!!"
-                       "\n=========================\n");
-                printf("%-18s %-29s %-26s %s \n", "ID", "NOME", "PREÇO", "QUANTIDADE");
+                       "\n!!!PRODUTOS ENCONTRADOS!!!"
+                       "\n=========================\n"
+                       "%-18s %-29s %-26s %s \n",
+                       "ID", "NOME", "PREÇO", "QUANTIDADE");
             }
             printf("%-19d", cabeca_estoque->id);
             printf("%-30s", cabeca_estoque->nome);
@@ -50,6 +51,7 @@ int buscar_nome_simples(produto *cabeca_estoque)
            "\n=========================\n");
     return 0;
 }
+
 int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular)
 {
     int quantidade_produto = 0;
@@ -69,12 +71,11 @@ int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular)
             aux = aux->no.proximo;
             if (aux == cabeca_circular->head)
             {
-                goto imprimir_produtos;
+                break;
             }
         }
     }
 
-imprimir_produtos:
     if (quantidade_produto == 0)
     {
         system("clear");
@@ -91,18 +92,21 @@ imprimir_produtos:
     return 0;
 }
 
-void exibicaoPausada(){
-    while(getchar() != '\n')  // para limpar o buffer
+void exibicaoPausada()
+{
+    while (getchar() != '\n') // para limpar o buffer
         ;
-        
-    printf("\n\nAperte Enter para sair");   // pendurando o programa
-    while(getchar() != '\n')     
+
+    printf("\n\nAperte Enter para sair"); // pendurando o programa
+    while (getchar() != '\n')
         ;
     return;
 }
 
-int listaVazia(listaCircular **cabeca_estoque){
-    if ((*cabeca_estoque)->head == NULL){
+int listaVazia(listaCircular **cabeca_estoque)
+{
+    if ((*cabeca_estoque)->head == NULL)
+    {
         printf("\n======================================================================================"
                "\n                               !!!!LISTA VAZIA!!!!"
                "\n======================================================================================\n");
@@ -111,4 +115,40 @@ int listaVazia(listaCircular **cabeca_estoque){
         return 1;
     }
     return 0;
+}
+
+int Atualizar_quantidade(produto *cabeca_estoque)
+{
+    int ID;
+    produto *inicio = cabeca_estoque;
+    printf("\n======================"
+           "\nDigite o ID do Produto"
+           "\n======================");
+    scanf("%d", &ID);
+    while (cabeca_estoque->id != ID)
+    {
+        cabeca_estoque = cabeca_estoque->no.proximo;
+        if (inicio == cabeca_estoque || cabeca_estoque== NULL)
+        {
+            break;
+        }
+    }
+    if (cabeca_estoque != NULL && ID == cabeca_estoque->id)
+    {
+        system("clear");
+        printf("\n========================"
+               "\n!!!PRODUTO ENCONTRADO!!!"
+               "\n========================\n"
+               "Digite a nova quantidade:");
+        scanf("%d", &cabeca_estoque->quantidade);
+        return 0;
+    }
+    else
+    {
+        system("clear");
+        printf("\n========================="
+               "\n !!!!NÃO ENCONTRADO!!!!"
+               "\n=========================\n");
+        return 0;
+    }
 }

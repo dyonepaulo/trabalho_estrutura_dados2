@@ -32,4 +32,6 @@ void exibicaoPausada();
 
 int listaVazia(listaCircular **cabeca_estoque);
 
+int Atualizar_quantidade(produto *cabeca_estoque);
+
 #endif
