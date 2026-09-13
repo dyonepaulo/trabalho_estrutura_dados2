@@ -16,13 +16,24 @@ int inserir(produto **novo, int ***contador_id){
 
         (*(*(*contador_id)))++;
         (*novo)->id = (*(*(*contador_id)))++;
+
         printf( "\n================================"
                 "\n     Cadastro do Produto!!"
-                "\n================================\n"
-                "QUANTIDADE: ");
+                "\n================================\n");
+
+        printf("QUANTIDADE: ");         
         scanf("%d", &(*novo)->quantidade);
+        if(getchar() != '\n'){              // artifício para retornar a informação que leitura não foi realizada com sucesso
+            printf("\nEntrada invalida. "); 
+        }
+
         printf("VALOR: ");
         scanf("%f", &(*novo)->valor);
+        if(getchar() != '\n'){
+            printf("\nEntrada inválida. ");
+            return -1;
+        }
+
         printf("NOME: ");
         scanf(" %[^\n]", (*novo)->nome);
     }
@@ -34,19 +45,24 @@ void inserir_circular_fim(listaCircular **cabeca_estoque, int **contador_id){
     produto *anterior;
     produto *novo;
 
-    inserir(&novo, &contador_id);
+    if(inserir(&novo, &contador_id) == -1){  // encerramento por causa da leitura errada
+        exibicaoPausada();   
+        return;
+    }
 
-    if((*cabeca_estoque) == NULL){
-        (*cabeca_estoque)->head = novo;
+    if((*cabeca_estoque)->head == NULL){
+        (*cabeca_estoque)->head = novo;  
         (*cabeca_estoque)->tail = novo;
+        novo->no.proximo = novo;       
 
         return;
-    } else {
+    } else {                            
         anterior = (*cabeca_estoque)->tail;
 
         anterior->no.proximo = novo;
         (*cabeca_estoque)->tail = novo;
         novo->no.proximo = (*cabeca_estoque)->head;
+
         return;
     }      
 }
@@ -55,13 +71,16 @@ void inserir_circular_inicio(listaCircular **cabeca_estoque, int **contador_id){
     produto *anterior;
     produto *novo;
 
-    inserir(&novo, &contador_id);
+    if(inserir(&novo, &contador_id) == -1){
+        exibicaoPausada();
+        return;
+    }
 
     if((*cabeca_estoque)->head == NULL){
         (*cabeca_estoque)->head = novo;
         (*cabeca_estoque)->tail = novo;        
         novo->no.proximo = (*cabeca_estoque)->head;
-        
+
         return;
     } else {
         anterior = (*cabeca_estoque)->head;
@@ -69,23 +88,39 @@ void inserir_circular_inicio(listaCircular **cabeca_estoque, int **contador_id){
         (*cabeca_estoque)->head = novo;
         novo->no.proximo = anterior;
         (*cabeca_estoque)->tail->no.proximo = novo;
+
         return;
     }
 }    
 
 void remover_circular_fim(listaCircular **cabeca_estoque){
     produto *atual;
+    produto *anterior;
 
     atual = (*cabeca_estoque)->head;
-    while(1){
-        if(atual->no.proximo != (*cabeca_estoque)->tail){
-            atual = atual->no.proximo;
-        } else {
-            free(atual->no.proximo);
-            (*cabeca_estoque)->tail = atual;
-            atual->no.proximo = (*cabeca_estoque)->head;
+    anterior = (*cabeca_estoque)->tail;
 
-            return ;
+    while(1){                                
+        if(atual != (*cabeca_estoque)->tail){  // o *atual avança até a tail
+            atual = atual->no.proximo;
+            anterior = anterior->no.proximo;
+        } else {
+            if(atual == (*cabeca_estoque)->head){  // verfica se a lista contém um único elemento
+                free((*cabeca_estoque)->head);
+                (*cabeca_estoque)->head = NULL;
+
+                printf("Removido com sucesso. \n");
+                exibicaoPausada();
+                return;
+            }
+
+            (*cabeca_estoque)->tail = anterior;  // casos comuns
+            anterior = atual->no.proximo;
+            free(atual);
+        
+            printf("Removido com sucesso. \n");
+            exibicaoPausada();
+            return;
         }
     } 
 }
@@ -95,30 +130,35 @@ void remover_circular_inicio(listaCircular **cabeca_estoque){
 
     prox = (*cabeca_estoque)->head->no.proximo;
 
+    if(prox == (*cabeca_estoque)->head){        // verifica se a lista é única (1 elemento), se não, a cabeça é removida
+        free((*cabeca_estoque)->head);
+        (*cabeca_estoque)->head = NULL;
+
+        printf("Removido com sucesso. \n");
+        exibicaoPausada();
+        return;
+    }
+
     free((*cabeca_estoque)->head);
     (*cabeca_estoque)->head = prox;
     (*cabeca_estoque)->tail->no.proximo = prox;
 
+    printf("Removido com sucesso. \n");
+    exibicaoPausada();
     return;
 } 
 
-void listarProduto(listaCircular *cabeca_estoque)
+void listarProduto(listaCircular **cabeca_estoque)
 {
-    char opcao;
     produto *atual = NULL;
     
-    if (cabeca_estoque->head == NULL)
-        {
-            printf("\n========================"
-                   "\n  !!!!LISTA VAZIA!!!!"
-                   "\n========================\n");
-            return;
-        }
+    if (listaVazia(cabeca_estoque) == 1) 
+        return;
 
-    while (atual != cabeca_estoque->head)
+    while (atual != (*cabeca_estoque)->head)
     {
         if(atual == NULL)
-            atual = cabeca_estoque->head;
+            atual = (*cabeca_estoque)->head;
 
         printf("%-19d", atual->id);
         printf("%-30s", atual->nome);
@@ -126,20 +166,79 @@ void listarProduto(listaCircular *cabeca_estoque)
         printf("%d\n", atual->quantidade);
 
         atual = atual->no.proximo;
-
     }
 
-    printf("\n\nAperte Enter para sair");
-    getchar();
-    while(getchar() != '\n')
-        ;
-    return;
+    exibicaoPausada();
+}
+
+void remover_circular_ID(listaCircular **cabeca_estoque, int ID){
+    produto *atual = (*cabeca_estoque)->head;
+    produto *anterior = atual;
+       
+    while(anterior != (*cabeca_estoque)->tail){
+        if (anterior == atual) { // verfica o primeiro elemento da lista
+            if(atual->id == ID){ // verifica se o ID corresponde
+                if(atual->no.proximo == atual){ // verifica o caso onde a lista tem 1 único elemento
+                    (*cabeca_estoque)->head = NULL;
+                    free(atual);
+
+                    printf("Produto Removido.\n");
+                    exibicaoPausada();
+                    return;
+                } else {
+                    (*cabeca_estoque)->head = atual->no.proximo;
+                    
+                    free(atual);
+
+                    printf("Produto Removido.\n");
+                    exibicaoPausada();
+                    return;
+                }
+            } else {
+                printf("ID não encontrado.\n");
+                exibicaoPausada();
+                return;
+            }
+            atual = atual->no.proximo; // avanço o *atual para que ele fique um nó à frente do *anterior
+            continue;
+        }
+
+        if(atual == (*cabeca_estoque)->tail){ // verifica o último elemento
+            if(atual->id == ID){
+                (*cabeca_estoque)->tail = anterior;
+                anterior->no.proximo = atual->no.proximo;
+                free(atual);
+
+                printf("Produto Removido.\n");
+                exibicaoPausada();
+                return;
+            } else {
+                printf("ID não encontrado.\n");
+                exibicaoPausada();
+                return;
+            } 
+
+            if(atual->id == ID){ // remove o produto no caso comum
+                if(atual->id == ID){
+                    anterior->no.proximo = atual->no.proximo;
+                    free(atual);
+                    printf("Produto removido.\n");
+                    exibicaoPausada();
+                    return;
+                }
+            }
+        }
+
+        atual = atual->no.proximo; 
+        anterior = anterior->no.proximo;
+    }
+    
 }
 
 int circular_menu(int *contador_id){
     listaCircular *cabeca_estoque = calloc(1, sizeof(listaCircular));
 
-    int opcao;
+    int opcao, ID;
     
     if ((*contador_id) == 1009)
         cabeca_estoque->head = NULL;
@@ -147,7 +246,7 @@ int circular_menu(int *contador_id){
 
     while(1){
         system("clear");
-        printf("===== GERENCIAR PERECÍVEIS =====\n"
+        printf("===== GERENCIAR PROMOÇÕES =====\n"
             "Escolha uma opção:\n"
             "1. Inserir no início ou fim\n"
             "2. Remover no início ou fim e por ID\n"
@@ -200,18 +299,35 @@ int circular_menu(int *contador_id){
                         "\n>>> ");
 
                 scanf("%d", &opcao);
+
                 switch (opcao)
                 {
-                    case 1: remover_circular_inicio(&cabeca_estoque);
+                    case 1: 
+                        if (listaVazia(&cabeca_estoque) == 1)
                             break;
-                    case 2: remover_circular_fim(&cabeca_estoque);
+                        
+                        remover_circular_inicio(&cabeca_estoque);
+                        break;
+                    case 2:
+                        if (listaVazia(&cabeca_estoque) == 1)
                             break;
-                    case 3: //remover_circular_ID(&cabeca_estoque);
+                        
+                        remover_circular_fim(&cabeca_estoque);
+                        break;
+                    case 3:
+                        if (listaVazia(&cabeca_estoque) == 1)
                             break;
-                    case 4: break;
+                        
+                        printf("Digite o ID: ");
+                        scanf("%d", &ID);
+                        remover_circular_ID(&cabeca_estoque, ID);
+                        break;
+                    case 4: 
+                        break;
 
-                    default: printf("\nEntrada inválida.");
-                            break;
+                    default: 
+                        printf("\nEntrada inválida.");
+                        break;
                 }
 
                 break;
@@ -226,7 +342,7 @@ int circular_menu(int *contador_id){
             case 5:
                 system("clear");
                 printf("%-18s %-29s %-26s %s\n", "ID", "NOME", "PREÇO", "QUANTIDADE");
-                listarProduto(cabeca_estoque);
+                listarProduto(&cabeca_estoque);
                 break;
             case 6:
                 system("clear");

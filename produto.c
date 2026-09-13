@@ -90,3 +90,25 @@ imprimir_produtos:
            quantidade_produto);
     return 0;
 }
+
+void exibicaoPausada(){
+    while(getchar() != '\n')  // para limpar o buffer
+        ;
+        
+    printf("\n\nAperte Enter para sair");   // pendurando o programa
+    while(getchar() != '\n')     
+        ;
+    return;
+}
+
+int listaVazia(listaCircular **cabeca_estoque){
+    if ((*cabeca_estoque)->head == NULL){
+        printf("\n======================================================================================"
+               "\n                               !!!!LISTA VAZIA!!!!"
+               "\n======================================================================================\n");
+
+        exibicaoPausada();
+        return 1;
+    }
+    return 0;
+}

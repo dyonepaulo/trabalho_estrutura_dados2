@@ -28,4 +28,8 @@ int buscar_nome_simples(produto *cabeca_estoque);
 
 int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular);
 
+void exibicaoPausada();
+
+int listaVazia(listaCircular **cabeca_estoque);
+
 #endif
