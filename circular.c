@@ -24,7 +24,7 @@ int inserir(produto **novo, int ***contador_id){
         printf("VALOR: ");
         scanf("%f", &(*novo)->valor);
         printf("NOME: ");
-        scanf(" % [^\n]", (*novo)->nome);
+        scanf(" %[^\n]", (*novo)->nome);
     }
     
     return 0;
@@ -60,6 +60,7 @@ void inserir_circular_inicio(listaCircular **cabeca_estoque, int **contador_id){
     if((*cabeca_estoque)->head == NULL){
         (*cabeca_estoque)->head = novo;
         (*cabeca_estoque)->tail = novo;        
+        novo->no.proximo = (*cabeca_estoque)->head;
         
         return;
     } else {
@@ -106,7 +107,7 @@ void listarProduto(listaCircular *cabeca_estoque)
     char opcao;
     produto *atual = NULL;
     
-    if (cabeca_estoque->head->id == 0)
+    if (cabeca_estoque->head == NULL)
         {
             printf("\n========================"
                    "\n  !!!!LISTA VAZIA!!!!"
@@ -125,6 +126,7 @@ void listarProduto(listaCircular *cabeca_estoque)
         printf("%d\n", atual->quantidade);
 
         atual = atual->no.proximo;
+
     }
 
     printf("\n\nAperte Enter para sair");
@@ -197,6 +199,7 @@ int circular_menu(int *contador_id){
                         "4. Voltar\n"
                         "\n>>> ");
 
+                scanf("%d", &opcao);
                 switch (opcao)
                 {
                     case 1: remover_circular_inicio(&cabeca_estoque);
