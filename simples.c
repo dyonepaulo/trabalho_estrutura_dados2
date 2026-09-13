@@ -178,7 +178,7 @@ int menu_simples(produto **cabeca_estoque, int *contador_id)
             break;
         case 4:
             system("clear");
-
+            Atualizar_quantidade(*cabeca_estoque);
             break;
         case 5:
             system("clear");
