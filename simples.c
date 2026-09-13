@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "produto.h"
 #include <stdio.h>
+#include <string.h>
 
 int inserir_simples(produto **cabeca_estoque, int *contador_id)
 {
@@ -173,7 +174,7 @@ int menu_simples(produto **cabeca_estoque, int *contador_id)
             break;
         case 3:
             system("clear");
-
+            buscar_nome_simples(*cabeca_estoque);
             break;
         case 4:
             system("clear");

@@ -16,4 +16,7 @@ struct produto
     nos no;
 };
 
+int buscar_nome_simples(produto *cabeca_estoque);
+
+
 #endif
