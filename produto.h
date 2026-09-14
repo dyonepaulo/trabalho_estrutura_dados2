@@ -30,7 +30,7 @@ int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular);
 
 void exibicaoPausada();
 
-int listaVazia(listaCircular **cabeca_estoque);
+int listaVazia(listaCircular *cabeca_estoque);
 
 int Atualizar_quantidade(produto *cabeca_estoque);
 

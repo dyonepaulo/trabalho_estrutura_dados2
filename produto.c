@@ -103,10 +103,15 @@ void exibicaoPausada()
     return;
 }
 
+<<<<<<< Updated upstream
 int listaVazia(listaCircular **cabeca_estoque)
 {
     if ((*cabeca_estoque)->head == NULL)
     {
+=======
+int listaVazia(listaCircular *cabeca_estoque){
+    if (cabeca_estoque->head == NULL){
+>>>>>>> Stashed changes
         printf("\n======================================================================================"
                "\n                               !!!!LISTA VAZIA!!!!"
                "\n======================================================================================\n");

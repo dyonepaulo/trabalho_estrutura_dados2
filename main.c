@@ -9,6 +9,7 @@ int main()
 {
     int opcao, contador_id = 1009;
     produto *cabeca_simples = calloc(1, sizeof(produto));
+    listaCircular *cabeca_circular = calloc(1, sizeof(listaCircular));
     if (cabeca_simples == NULL)
     {
         printf("\nErro de alocação de memoria!!");
@@ -35,7 +36,7 @@ int main()
 
             break;
         case 3:
-            circular_menu(&contador_id);
+            circular_menu(cabeca_circular, &contador_id);
             break;
         case 0:
             system("clear");
