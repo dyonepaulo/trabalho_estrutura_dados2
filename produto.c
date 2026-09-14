@@ -66,7 +66,7 @@ int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular)
         cabeca_estoque = cabeca_estoque->no.proximo;
     }
     
-    if (cabeca_circular->head != NULL)
+    if (cabeca_circular != NULL)
     {
         produto *aux = cabeca_circular->head;
 
