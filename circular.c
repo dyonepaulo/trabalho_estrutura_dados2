@@ -411,7 +411,7 @@ int circular_menu(listaCircular *cabeca_estoque, int *contador_id){
                 break;
             case 3:
                 system("clear");
-                buscar_nome_simples(cabeca_estoque->head);
+                buscar_nome(cabeca_estoque->head);
                 break;
             case 4:
                 system("clear");

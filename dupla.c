@@ -312,27 +312,6 @@ int buscar_dupla(produto *inicio){
     return 0;
 }
 
-int esvaziar_dupla(produto **inicio, produto **fim){
-    if(*inicio==NULL){
-        printf("\n========================"
-            "\nLista vazia!!!!"
-            "\n========================\n");
-        return 0;
-    }
-    produto *aux=*inicio;
-    while(aux!=NULL){
-        produto *temp=aux;
-        aux=aux->no.proximo;
-        free(temp);
-    }
-    *inicio=NULL;
-    *fim=NULL;
-    printf("\n========================"
-        "\nLista esvaziada com sucesso!!!!"
-        "\n========================\n");
-    return 0;
-}
-
 int menu_dupla(produto **inicio, produto **fim, int *contador_id){
     int escolha;
     inicio:
@@ -341,11 +320,8 @@ int menu_dupla(produto **inicio, produto **fim, int *contador_id){
         "2. Remover\n"
         "3. Listar\n"
         "4. Listar em ordem reversa\n"
-        "5. Atualizar quantidade de um produto\n"
-        "6. Buscar por nome\n"
-        "7. Contar quantos produtos há no estoque\n"
-        "8. Esvaziar completamente o estoque\n"
-        "0. Voltar\n"
+        "5. Buscar por nome\n"
+        "6. Voltar\n"
         "Escolha uma opção: ");
     scanf("%d", &escolha);
     switch(escolha){
@@ -362,20 +338,8 @@ int menu_dupla(produto **inicio, produto **fim, int *contador_id){
             listar_dupla_reverso(*fim);
             break;
         case 5:
-            Atualizar_quantidade(*inicio);
-            break;
-        case 6:
             buscar_dupla(*inicio);
             break;
-        case 7:
-            conta_produtos(*inicio, NULL);
-            break;
-        case 8:
-            esvaziar_dupla(inicio, fim);
-            break;
-        case 0  :
-            system("clear");
-            return 0;
         default:
             system("clear");
             printf("===============================\n"

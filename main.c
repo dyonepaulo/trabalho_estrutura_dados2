@@ -41,6 +41,7 @@ int main()
         case 0:
             system("clear");
             printf("PROGRAMA ENCERRADO...\n");
+            esvaziar_simples(cabeca_simples);
             free(cabeca_simples);
             return 0;
             break;

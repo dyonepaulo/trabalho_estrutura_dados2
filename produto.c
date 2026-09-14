@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int buscar_nome_simples(produto *cabeca_estoque)
+int buscar_nome(produto *cabeca_estoque)
 {
     int encontrou = 0;
     system("clear");
@@ -103,15 +103,10 @@ void exibicaoPausada()
     return;
 }
 
-<<<<<<< Updated upstream
-int listaVazia(listaCircular **cabeca_estoque)
+int listaVazia(listaCircular *cabeca_estoque)
 {
-    if ((*cabeca_estoque)->head == NULL)
+    if (cabeca_estoque->head == NULL)
     {
-=======
-int listaVazia(listaCircular *cabeca_estoque){
-    if (cabeca_estoque->head == NULL){
->>>>>>> Stashed changes
         printf("\n======================================================================================"
                "\n                               !!!!LISTA VAZIA!!!!"
                "\n======================================================================================\n");

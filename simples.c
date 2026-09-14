@@ -170,11 +170,11 @@ int menu_simples(produto **cabeca_estoque, int *contador_id)
             break;
         case 2:
             system("clear");
-
+            remover_simples(cabeca_estoque);
             break;
         case 3:
             system("clear");
-            buscar_nome_simples(*cabeca_estoque);
+            buscar_nome(*cabeca_estoque);
             break;
         case 4:
             system("clear");
@@ -245,5 +245,135 @@ int esvaziar_simples(produto *cabeca_estoque)
                    "=======================\n\n");
             return 0;
         }
+    }
+}
+
+int remover_simples(produto **cabeca_estoque)
+{
+    int escolha;
+    int id;
+    produto *aux, *anterior = (*cabeca_estoque);
+
+    if ((*cabeca_estoque)->id == 0)
+    {
+        printf("\n========================"
+               "\nLista vazia!!!!"
+               "\n========================\n");
+        return 0;
+    }
+inicio:
+    printf("=======REMOVER=======\n"
+           "1. Remover do início\n"
+           "2. Remover do fim\n"
+           "3. Remover por ID\n"
+           "4. Voltar\n"
+           "Escolha uma opção: ");
+    scanf("%d", &escolha);
+
+    switch (escolha)
+    {
+    case 1:
+
+        if ((*cabeca_estoque)->no.proximo == NULL)
+        {
+            (*cabeca_estoque)->id = 0;
+            printf("\n========================"
+                   "\nRemovido com sucesso!!!!"
+                   "\n========================\n");
+            return 0;
+        }
+
+        aux = (*cabeca_estoque)->no.proximo;
+        free(*cabeca_estoque);
+        *cabeca_estoque = aux;
+
+        printf("\n========================"
+               "\nRemovido com sucesso!!!!"
+               "\n========================\n");
+        return 0;
+
+    case 2:
+
+        if ((*cabeca_estoque)->no.proximo == NULL)
+        {
+            (*cabeca_estoque)->id = 0;
+            printf("\n========================"
+                   "\nRemovido com sucesso!!!!"
+                   "\n========================\n");
+            return 0;
+        }
+    remover_final:
+        aux = *cabeca_estoque;
+
+        while (aux->no.proximo->no.proximo != NULL)
+        {
+            aux = aux->no.proximo;
+        }
+
+        free(aux->no.proximo);
+        aux->no.proximo = NULL;
+
+        printf("\n========================"
+               "\nRemovido com sucesso!!!!"
+               "\n========================\n");
+        return 0;
+
+    case 3:
+        printf("\nDigite o ID do produto a ser removido: ");
+        scanf("%d", &id);
+
+        aux = *cabeca_estoque;
+
+        while (aux != NULL)
+        {
+            if (aux->id == id)
+            {
+                if (aux == *cabeca_estoque)
+                {
+                    if (aux->no.proximo == NULL)
+                    {
+                        aux->id = 0;
+                    }
+                    else
+                    {
+                        (*cabeca_estoque) = aux->no.proximo;
+                        free(aux);
+                    }
+                }
+                else if (aux->no.proximo == NULL)
+                {
+                    goto remover_final;
+                }
+                else
+                {
+                    anterior->no.proximo = aux->no.proximo;
+                    free(aux);
+                }
+
+                printf("\n========================"
+                       "\nRemovido com sucesso!!!!"
+                       "\n========================\n");
+                return 0;
+            }
+
+            anterior = aux;
+            aux = aux->no.proximo;
+        }
+
+        printf("\n=========================="
+               "\nProduto não encontrado!!!!"
+               "\n==========================\n");
+        return 0;
+
+    case 4:
+        system("clear");
+        return 0;
+
+    default:
+        system("clear");
+        printf("===============================\n"
+               "Opção inválida. Tente novamente.\n"
+               "===============================\n\n");
+        goto inicio;
     }
 }

@@ -24,7 +24,7 @@ struct produto
     nos no;
 };
 
-int buscar_nome_simples(produto *cabeca_estoque);
+int buscar_nome(produto *cabeca_estoque);
 
 int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular);
 
