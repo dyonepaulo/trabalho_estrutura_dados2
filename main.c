@@ -9,7 +9,8 @@ int main()
 {
     int opcao, contador_id = 1009;
     produto *cabeca_simples = calloc(1, sizeof(produto));
-    listaCircular *cabeca_circular = calloc(1, sizeof(listaCircular));
+    
+
     if (cabeca_simples == NULL)
     {
         printf("\nErro de alocação de memoria!!");
@@ -17,11 +18,19 @@ int main()
     }
     produto *inicio_dupla=calloc(1, sizeof(produto));
     produto *fim_dupla=inicio_dupla;
-    if (inicio_dupla == NULL)
+    if (inicio_dupla == NULL){
+        printf("\nErro de alocação de memoria!!");
+        return 1;
+    }
+
+    listaCircular *cabeca_circular = calloc(1, sizeof(listaCircular));
+
+    if (cabeca_circular == NULL)
     {
         printf("\nErro de alocação de memoria!!");
         return 1;
     }
+
     while (1)
     {
         printf("\n===== ESTOQUE DA LOJA =====\n"
@@ -43,13 +52,15 @@ int main()
 
             break;
         case 3:
-            circular_menu(cabeca_circular, &contador_id);
+            circular_menu(&cabeca_circular, &contador_id);
             break;
         case 0:
             system("clear");
             printf("PROGRAMA ENCERRADO...\n");
             esvaziar_simples(cabeca_simples);
+            esvaziar_circular(&cabeca_circular);
             free(cabeca_simples);
+            free(cabeca_circular);
             return 0;
             break;
         default:

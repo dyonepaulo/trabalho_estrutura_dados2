@@ -41,16 +41,20 @@ int buscar_nome(produto *cabeca_estoque)
         }
         cabeca_estoque = cabeca_estoque->no.proximo;
     }
+
     if (encontrou > 0)
     {
         return 0;
     }
+
     system("clear");
     printf("\n========================="
            "\n !!!!NÃO ENCONTRADO!!!!"
            "\n=========================\n");
+    exibicaoPausada();
     return 0;
-}
+
+} 
 
 int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular)
 {
@@ -61,19 +65,15 @@ int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular)
         quantidade_produto++;
         cabeca_estoque = cabeca_estoque->no.proximo;
     }
-    if (cabeca_circular != NULL)
+    
+    if (cabeca_circular->head != NULL)
     {
         produto *aux = cabeca_circular->head;
-        while (aux->id != 0)
-        {
 
+        do {
             quantidade_produto++;
             aux = aux->no.proximo;
-            if (aux == cabeca_circular->head)
-            {
-                break;
-            }
-        }
+        } while (aux != cabeca_circular->head);
     }
 
     if (quantidade_produto == 0)
@@ -82,6 +82,8 @@ int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular)
         printf("\n========================"
                "\n  !!!!LISTA VAZIA!!!!"
                "\n========================\n");
+
+        exibicaoPausada();
         return 0;
     }
 
@@ -89,24 +91,24 @@ int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular)
            "\n    LISTA POSSUI: %d PRODUTOS"
            "\n==================================\n",
            quantidade_produto);
+
+    exibicaoPausada();
     return 0;
 }
 
 void exibicaoPausada()
 {
-    while (getchar() != '\n') // para limpar o buffer
+    while (getchar() != '\n')
         ;
 
-    printf("\n\nAperte Enter para sair"); // pendurando o programa
+    printf("\n\nAperte Enter para sair");
     while (getchar() != '\n')
         ;
     return;
 }
 
-int listaVazia(listaCircular *cabeca_estoque)
-{
-    if (cabeca_estoque->head == NULL)
-    {
+int listaVazia(listaCircular *cabeca_estoque){
+    if (cabeca_estoque->head == NULL){
         printf("\n======================================================================================"
                "\n                               !!!!LISTA VAZIA!!!!"
                "\n======================================================================================\n");

@@ -8,6 +8,8 @@ void inserir_circular(listaCircular *cabeca_estoque, int *contador_id);
 
 void listarProduto(listaCircular *cabeca_estoque);
 
-int circular_menu(listaCircular *cabeca_estoque, int *contador_id);
+int circular_menu(listaCircular **cabeca_estoque, int *contador_id);
+
+void esvaziar_circular(listaCircular **cabeca_estoque);
 
 #endif
