@@ -12,6 +12,8 @@ int listar_dupla_reverso(produto *fim);
 
 int buscar_dupla(produto *inicio);
 
+int esvaziar_dupla(produto **inicio, produto **fim);
+
 int menu_dupla(produto **inicio, produto **fim, int *contador_id);
 
 #endif
