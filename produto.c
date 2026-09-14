@@ -119,11 +119,18 @@ int listaVazia(listaCircular *cabeca_estoque)
 
 int Atualizar_quantidade(produto *cabeca_estoque)
 {
+    if(cabeca_estoque == NULL || cabeca_estoque->id == 0){
+        system("clear");
+        printf("\n========================"
+               "\n  !!!!LISTA VAZIA!!!!"
+               "\n========================\n");
+        return 0;
+    }
     int ID;
     produto *inicio = cabeca_estoque;
     printf("\n======================"
            "\nDigite o ID do Produto"
-           "\n======================");
+           "\n======================\n");
     scanf("%d", &ID);
     while (cabeca_estoque->id != ID)
     {

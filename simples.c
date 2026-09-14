@@ -121,6 +121,7 @@ inicio:
                "===============================\n\n");
         goto inicio;
     }
+    return 0;
 }
 
 int listar_simples(produto *cabeca_estoque)

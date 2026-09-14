@@ -9,7 +9,7 @@ int inserir_dupla (produto **inicio, produto **fim, int *contador_id ){
     produto *aux;
     int escolha;
     inicio:
-    printf("=======INSERIR=======\n"
+    printf("\n=======INSERIR=======\n"
         "1. Inserir no início\n"
         "2. Inserir no fim\n"
         "3. Voltar\n"
@@ -29,10 +29,9 @@ int inserir_dupla (produto **inicio, produto **fim, int *contador_id ){
                 printf("\n°VALOR: ");
                 scanf("%f", &(*inicio)->valor);
                 printf("\n°NOME: ");
-                scanf("%49s", (*inicio)->nome);
+                scanf(" %49[^\n]", (*inicio)->nome);
                 (*inicio)->no.proximo=NULL;
                 (*inicio)->no.anterior=NULL;
-                (*inicio)->no.anterior = NULL;
                 *fim=*inicio;
                 printf("\n========================"
                     "\nInserido com sucesso!!!!"
@@ -49,7 +48,8 @@ int inserir_dupla (produto **inicio, produto **fim, int *contador_id ){
                     return 1;
                 }
                 (*inicio)->no.proximo=aux;
-                (aux)->no.anterior=*inicio;;
+                (aux)->no.anterior=*inicio;
+                (*inicio)->no.anterior=NULL;
                 (*contador_id)++;
                 (*inicio)->id=*contador_id;
                 printf("\n================================"
@@ -60,7 +60,7 @@ int inserir_dupla (produto **inicio, produto **fim, int *contador_id ){
                 printf("\n°VALOR: ");
                 scanf("%f", &(*inicio)->valor);
                 printf("\n°NOME: ");
-                scanf("%49s", (*inicio)->nome);
+                scanf(" %49[^\n]", (*inicio)->nome);
                 printf("\n========================"
                     "\nInserido com sucesso!!!!"
                     "\n========================\n");
@@ -79,7 +79,7 @@ int inserir_dupla (produto **inicio, produto **fim, int *contador_id ){
                 printf("\n°VALOR: ");
                 scanf("%f", &(*fim)->valor);
                 printf("\n°NOME: ");
-                scanf("%49s", (*fim)->nome);
+                scanf(" %49[^\n]", (*fim)->nome);
                 (*fim)->no.proximo=NULL;
                 (*fim)->no.anterior=NULL;
                 *inicio=*fim;
@@ -109,7 +109,7 @@ int inserir_dupla (produto **inicio, produto **fim, int *contador_id ){
                 printf("\n°VALOR: ");
                 scanf("%f", &(*fim)->valor);
                 printf("\n°NOME: ");
-                scanf("%49s", (*fim)->nome);
+                scanf(" %49[^\n]", (*fim)->nome);
                 printf("\n========================"
                     "\nInserido com sucesso!!!!"
                     "\n========================\n");
@@ -130,6 +130,13 @@ int inserir_dupla (produto **inicio, produto **fim, int *contador_id ){
 
 int remover_dupla (produto **inicio, produto **fim){
 
+    if(*inicio==NULL || (*inicio)->id==0){
+        printf("\n========================"
+            "\nLista vazia!!!!"
+            "\n========================\n");
+        return 0;
+    }
+
     int escolha;
     inicio:
     printf("=======REMOVER=======\n"
@@ -140,14 +147,7 @@ int remover_dupla (produto **inicio, produto **fim){
         "Escolha uma opção: ");
     scanf("%d", &escolha);
     switch(escolha){
-        case 1:
-            if(*inicio==NULL){
-                printf("\n========================"
-                    "\nLista vazia!!!!"
-                    "\n========================\n");
-                return 0;
-            }
-            else{
+        case 1:{
                 produto *aux=(*inicio);
                 if(*inicio==*fim){
                     *inicio=NULL;
@@ -158,19 +158,20 @@ int remover_dupla (produto **inicio, produto **fim){
                     (*inicio)->no.anterior=NULL;
                 }
                 free(aux);
+                if(*inicio==NULL){
+                    *inicio=calloc(1,sizeof(produto));
+                    if(*inicio==NULL){
+                        printf("\nErro de alocação de memoria!!");
+                        return 1;
+                    }
+                    *fim=*inicio;
+                }
                 printf("\n========================"
                     "\nRemovido com sucesso!!!!"
                     "\n========================\n");
                 return 0;
-            }
-        case 2:
-            if(*fim==NULL){
-                printf("\n========================"
-                    "\nLista vazia!!!!"
-                    "\n========================\n");
-                return 0;
-            }
-            else{
+        }
+        case 2:{
                 produto *aux=(*fim);
                 if(*inicio==*fim){
                     *inicio=NULL;
@@ -181,21 +182,23 @@ int remover_dupla (produto **inicio, produto **fim){
                     (*fim)->no.proximo=NULL;
                 }
                 free(aux);
+                if(*fim==NULL){
+                    *fim=calloc(1,sizeof(produto));
+                    if(*fim==NULL){
+                        printf("\nErro de alocação de memoria!!");
+                        return 1;
+                    }
+                    *inicio=*fim;
+                }
                 printf("\n========================"
                     "\nRemovido com sucesso!!!!"
                     "\n========================\n");
                 return 0;
-            }
-        case 3:
+        }
+        case 3:{
             printf("\nDigite o ID do produto a ser removido: ");
             int id;
             scanf("%d", &id);
-            if (*inicio==NULL){
-                printf("\n========================"
-                    "\nLista vazia!!!!"
-                    "\n========================\n");
-                return 0;
-            }
                 produto *aux=(*inicio);
                 while(aux!=NULL){
                     if(aux->id==id){
@@ -227,10 +230,19 @@ int remover_dupla (produto **inicio, produto **fim){
                     }
                     aux=aux->no.proximo;
                 }
+                if(*inicio==NULL){
+                    *inicio=calloc(1,sizeof(produto));
+                    if(*inicio==NULL){
+                        printf("\nErro de alocação de memoria!!");
+                        return 1;
+                    }
+                    *fim=*inicio;
+                }
                 printf("\n========================"
                     "\nProduto não encontrado!!!!"
                     "\n========================\n");
                 return 0;
+        }
         case 4:
             system("clear");
             return 0;
@@ -244,7 +256,7 @@ int remover_dupla (produto **inicio, produto **fim){
 }
 
 int listar_dupla(produto *inicio){
-    if(inicio==NULL){
+    if(inicio==NULL || inicio->id==0){
         printf("\n========================"
             "\nLista vazia!!!!"
             "\n========================\n");
@@ -252,7 +264,7 @@ int listar_dupla(produto *inicio){
     }
     produto *aux=inicio;
     while(aux!=NULL){
-        printf("ID: %d\n", aux->id);
+        printf("\nID: %d\n", aux->id);
         printf("Nome: %s\n", aux->nome);
         printf("Quantidade: %d\n", aux->quantidade);
         printf("Valor: %.2f\n", aux->valor);
@@ -263,7 +275,7 @@ int listar_dupla(produto *inicio){
 }
 
 int listar_dupla_reverso(produto *fim){
-    if(fim==NULL){
+    if(fim==NULL || fim->id==0){
         printf("\n========================"
             "\nLista vazia!!!!"
             "\n========================\n");
@@ -271,7 +283,7 @@ int listar_dupla_reverso(produto *fim){
     }
     produto *aux=fim;
     while(aux!=NULL){
-        printf("ID: %d\n", aux->id);
+        printf("\nID: %d\n", aux->id);
         printf("Nome: %s\n", aux->nome);
         printf("Quantidade: %d\n", aux->quantidade);
         printf("Valor: %.2f\n", aux->valor);
@@ -282,7 +294,7 @@ int listar_dupla_reverso(produto *fim){
 }
 
 int buscar_dupla(produto *inicio){
-    if(inicio==NULL){
+    if(inicio==NULL || inicio->id==0){
         printf("\n========================"
             "\nLista vazia!!!!"
             "\n========================\n");
@@ -295,7 +307,7 @@ int buscar_dupla(produto *inicio){
     int existe=0;
     while(aux!=NULL){
         if(strstr(aux->nome, nome)!=NULL){
-            printf("ID: %d\n", aux->id);
+            printf("\nID: %d\n", aux->id);
             printf("Nome: %s\n", aux->nome);
             printf("Quantidade: %d\n", aux->quantidade);
             printf("Valor: %.2f\n", aux->valor);
@@ -312,16 +324,44 @@ int buscar_dupla(produto *inicio){
     return 0;
 }
 
+int esvaziar_dupla(produto **inicio, produto **fim){
+    if(*inicio==NULL || (*inicio)->id==0){
+        printf("\n========================"
+            "\nLista vazia!!!!"
+            "\n========================\n");
+        return 0;
+    }
+    produto *aux=*inicio;
+    while(aux!=NULL){
+        produto *temp=aux;
+        aux=aux->no.proximo;
+        free(temp);
+    }
+    *inicio=calloc(1,sizeof(produto));
+    if(*inicio==NULL){
+        printf("\nErro de alocação de memoria!!");
+        return 1;
+    }
+    *fim=*inicio;
+    printf("\n========================"
+        "\nLista esvaziada com sucesso!!!!"
+        "\n========================\n");
+    return 0;
+}
+
 int menu_dupla(produto **inicio, produto **fim, int *contador_id){
     int escolha;
     inicio:
-    printf("=======MENU=======\n"
+    printf("\n=======MENU=======\n"
         "1. Inserir\n"
         "2. Remover\n"
-        "3. Listar\n"
-        "4. Listar em ordem reversa\n"
+        "3. Exibir todos produtos\n"
+        "4. Exibir em ordem reversa\n"
         "5. Buscar por nome\n"
-        "6. Voltar\n"
+        "6. Atualizar quantidade de um produto\n"
+        "7. Contar quantos produtos há no estoque\n"
+        "8. Esvaziar estoque\n"
+        "0. Voltar\n"
         "Escolha uma opção: ");
     scanf("%d", &escolha);
     switch(escolha){
@@ -331,15 +371,27 @@ int menu_dupla(produto **inicio, produto **fim, int *contador_id){
         case 2:
             remover_dupla(inicio, fim);
             break;
-        case 3:
+        case 4:
             listar_dupla(*inicio);
             break;
-        case 4:
+        case 3:
             listar_dupla_reverso(*fim);
             break;
         case 5:
             buscar_dupla(*inicio);
             break;
+        case 6:
+            Atualizar_quantidade(*inicio);
+            break;
+        case 7:
+            conta_produtos(*inicio, NULL);
+            break;
+        case 8:
+            esvaziar_dupla(inicio, fim);
+            break;
+        case 0:
+            system("clear");
+            return 0;
         default:
             system("clear");
             printf("===============================\n"
@@ -347,4 +399,5 @@ int menu_dupla(produto **inicio, produto **fim, int *contador_id){
                    "===============================\n\n");
         goto inicio;
     }
+    return 0;
 }

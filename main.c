@@ -15,7 +15,13 @@ int main()
         printf("\nErro de alocação de memoria!!");
         return 1;
     }
-
+    produto *inicio_dupla=calloc(1, sizeof(produto));
+    produto *fim_dupla=inicio_dupla;
+    if (inicio_dupla == NULL)
+    {
+        printf("\nErro de alocação de memoria!!");
+        return 1;
+    }
     while (1)
     {
         printf("\n===== ESTOQUE DA LOJA =====\n"
@@ -33,6 +39,7 @@ int main()
 
             break;
         case 2:
+            menu_dupla(&inicio_dupla, &fim_dupla, &contador_id);
 
             break;
         case 3:
