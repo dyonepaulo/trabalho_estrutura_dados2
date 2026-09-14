@@ -68,12 +68,15 @@ int conta_produtos(produto *cabeca_estoque, listaCircular *cabeca_circular)
     
     if (cabeca_circular != NULL)
     {
-        produto *aux = cabeca_circular->head;
+        if(cabeca_circular->head){
+            produto *aux = cabeca_circular->head;
 
-        do {
-            quantidade_produto++;
-            aux = aux->no.proximo;
-        } while (aux != cabeca_circular->head);
+            do {
+                quantidade_produto++;
+                aux = aux->no.proximo;
+            } while (aux != cabeca_circular->head);
+        }
+            
     }
 
     if (quantidade_produto == 0)
