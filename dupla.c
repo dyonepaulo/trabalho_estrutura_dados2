@@ -9,6 +9,7 @@ int inserir_dupla (produto **inicio, produto **fim, int *contador_id ){
     produto *aux;
     int escolha;
     inicio:
+    system("clear");
     printf("\n=======INSERIR=======\n"
         "1. Inserir no início\n"
         "2. Inserir no fim\n"
@@ -139,6 +140,7 @@ int remover_dupla (produto **inicio, produto **fim){
 
     int escolha;
     inicio:
+    system("clear");
     printf("=======REMOVER=======\n"
         "1. Remover do início\n"
         "2. Remover do fim\n"
@@ -300,6 +302,7 @@ int buscar_dupla(produto *inicio){
             "\n========================\n");
         return 0;
     }
+    system("clear");
     printf("\nPor favor, digite o nome do produto que deseja buscar: ");
     char nome[50];
     scanf(" %[^\n]", nome);
@@ -352,6 +355,7 @@ int esvaziar_dupla(produto **inicio, produto **fim){
 int menu_dupla(produto **inicio, produto **fim, int *contador_id){
     int escolha;
     inicio:
+    system("clear");
     printf("\n=======MENU=======\n"
         "1. Inserir\n"
         "2. Remover\n"
