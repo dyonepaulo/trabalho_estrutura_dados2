@@ -47,7 +47,7 @@ void inserir_circular_fim(listaCircular **cabeca_estoque, int **contador_id){
     produto *anterior;
     produto *novo;
 
-    if(inserir(&novo, &contador_id) == -1){  // encerramento por causa da leitura errada
+    if(inserir(&novo, &contador_id) == -1){  
         exibicaoPausada();   
         return;
     }
